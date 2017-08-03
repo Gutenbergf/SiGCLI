@@ -83,6 +83,11 @@ public class SiGCLI {
             r.replaceText("#cepImovel#", contrato.getEndereco().getCep());
             r.replaceText("#cidadeImovel#", contrato.getEndereco().getCidade());
             r.replaceText("#estadoImovel#", contrato.getEndereco().getEstado());
-            //Info do Contrato
+            //Info do Contrato	
+            r.replaceText("#dtInicio#", contrato.getDtInicio());
+            r.replaceText("#dtfim#", contrato.getDtTermino());
+            r.replaceText("#valorAlguel#", String.valueOf(contrato.getValorAluguel()));
+
+	
         }
 }
