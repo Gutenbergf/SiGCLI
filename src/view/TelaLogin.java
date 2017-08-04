@@ -32,8 +32,6 @@ public class TelaLogin extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         txtLogin = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         txtSenha = new javax.swing.JPasswordField();
         fundo = new javax.swing.JLabel();
 
@@ -47,23 +45,15 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(300, 340, 63, 23);
+        jButton1.setBounds(290, 330, 63, 23);
         getContentPane().add(txtLogin);
-        txtLogin.setBounds(250, 220, 170, 30);
-
-        jLabel2.setText("Login:");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(250, 194, 50, 20);
-
-        jLabel1.setText("Senha:");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(250, 264, 60, 20);
+        txtLogin.setBounds(230, 210, 170, 30);
         getContentPane().add(txtSenha);
-        txtSenha.setBounds(250, 290, 170, 30);
+        txtSenha.setBounds(230, 270, 170, 30);
 
-        fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Por-Que-Contratar-Um-Corretor-de-Imóveis-7.jpg"))); // NOI18N
+        fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Fundo_TelaLogin3.jpg"))); // NOI18N
         getContentPane().add(fundo);
-        fundo.setBounds(4, 0, 590, 480);
+        fundo.setBounds(-220, 0, 810, 480);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -119,8 +109,6 @@ public class TelaLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel fundo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField txtLogin;
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
