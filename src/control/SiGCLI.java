@@ -83,6 +83,7 @@ public class SiGCLI {
             r.replaceText("#cepImovel#", contrato.getEndereco().getCep());
             r.replaceText("#cidadeImovel#", contrato.getEndereco().getCidade());
             r.replaceText("#estadoImovel#", contrato.getEndereco().getEstado());
+<<<<<<< HEAD
             r.replaceText("#nomecidade#", contrato.getEndereco().getCidade());
             r.replaceText("#estado#", contrato.getEndereco().getEstado());
             //Info do Contrato
@@ -185,6 +186,14 @@ public class SiGCLI {
           if (((i == 0) || (i == 1)) && s.length() != 0)
              tem = true; // tem centena ou mil no valor
           i = i + 1; // próximo qualificador: 1- mil, 2- milhão, 3- bilhão, ...
+=======
+            //Info do Contrato	
+            r.replaceText("#dtInicio#", contrato.getDtInicio());
+            r.replaceText("#dtfim#", contrato.getDtTermino());
+            r.replaceText("#valorAlguel#", String.valueOf(contrato.getValorAluguel()));
+
+	
+>>>>>>> f59d25de3b1f491498e7484c13dad13dde4ca2b4
         }
 
         if (s.length() != 0) {
