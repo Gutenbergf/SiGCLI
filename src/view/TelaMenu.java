@@ -11,14 +11,15 @@ import javax.swing.JOptionPane;
  *
  * @author Gutenberg
  */
-public class TelaLogin extends javax.swing.JFrame {
+public class TelaMenu extends javax.swing.JFrame {
 
     /**
-     * Creates new form TelaLogin
+     * Creates new form TelaMenu
      */
-    public TelaLogin() {
+    public TelaMenu() {
         initComponents();
-        setSize(610, 480);
+        setSize(530, 480);
+        jButton1.setEnabled(false);
     }
 
     /**
@@ -31,46 +32,49 @@ public class TelaLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        txtLogin = new javax.swing.JTextField();
-        txtSenha = new javax.swing.JPasswordField();
-        fundo = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SiGCLI | Login");
+        setTitle("SiGCLI | Menu");
         setResizable(false);
         getContentPane().setLayout(null);
 
-        jButton1.setText("Entrar");
+        jButton1.setText("Cadastrar Usuario");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(270, 330, 90, 30);
-        getContentPane().add(txtLogin);
-        txtLogin.setBounds(230, 210, 170, 30);
-        getContentPane().add(txtSenha);
-        txtSenha.setBounds(230, 270, 170, 30);
+        jButton1.setBounds(190, 190, 140, 40);
 
-        fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Fundo_TelaLogin3.jpg"))); // NOI18N
-        getContentPane().add(fundo);
-        fundo.setBounds(-220, 0, 810, 480);
+        jButton2.setText("Gerar Contrato");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2);
+        jButton2.setBounds(190, 253, 140, 40);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Fundo_Tela.jpg"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(-240, 0, 780, 470);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        TelaGeraContrato tgc = new TelaGeraContrato();
+        tgc.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(txtLogin.getText().equals("Gutenberg") && txtSenha.getText().equals("1234")){
-            JOptionPane.showMessageDialog(null, "Logado com sucesso!");
-            TelaMenu tm = new TelaMenu();
-            tm.setVisible(true);
-            setVisible(false);
-            
-        }else{
-            JOptionPane.showMessageDialog(null, "Login ivalido!");
-        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -91,28 +95,27 @@ public class TelaLogin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaLogin().setVisible(true);
+                new TelaMenu().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel fundo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JTextField txtLogin;
-    private javax.swing.JPasswordField txtSenha;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
