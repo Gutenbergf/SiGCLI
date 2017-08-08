@@ -22,25 +22,31 @@ public class SiGCLI {
         static Range r;
         public static void processaDocumento(Locador locador,Locatario locatario, Contrato contrato){
             try {
+                        // Criar pasta
+                        File diretorio = Diretorio.getInstance();
+                        diretorio.mkdir();
                         // Lendo Documento
-			File readWord = new File("C:\\Users\\Gutenberg\\Documents\\Contrato\\MCLI.doc");
+			File readWord = new File("MCLI.doc");
 			FileInputStream fis = new FileInputStream(readWord);
 			BufferedInputStream bis = new BufferedInputStream(fis);
                         
                         //Criando Documento
-			File writeWord = new File("C:\\Users\\Gutenberg\\Documents\\Contrato\\MCLI2.doc");
+                        String nomeLocatario[] = locatario.getNomeLocatario().split(" ");
+                        
+			File writeWord = new File("C:\\Users\\"+System.getProperty("user.name")+"\\Desktop\\Contratos\\Contrato-"+nomeLocatario[0]+".doc");
+                        File writePdf = new File("C:\\Users\\"+System.getProperty("user.name")+"\\Desktop\\Contratos\\Contrato-"+nomeLocatario[0]+".pdf");
 			HWPFDocument hwpf = new HWPFDocument(bis);
 			r = hwpf.getRange();
 			modificaCampos(locador, locatario,contrato); // Fazendo alterações no novo documento
 			WordExtractor we = new WordExtractor(hwpf);
-			System.out.println(we.getText());
+			//System.out.println(we.getText());
 			if(writeWord.exists())
 				writeWord.delete();
 			FileOutputStream fos = new FileOutputStream(writeWord);
 			BufferedOutputStream bos = new BufferedOutputStream(fos);
 			hwpf.write(bos);
 			bos.flush();
-			bos.close();
+			bos.close();                        
 		} catch (Exception e) {
 			e.printStackTrace();
 		} catch (Throwable t) {
@@ -222,43 +228,45 @@ public class SiGCLI {
         
         private static String getMes(String mes){
              if(Integer.parseInt(mes)==1){
-                return "Janeiro";
+                return "janeiro";
             }
             if(Integer.parseInt(mes)==2){
-                return "Fevereiro";
+                return "fevereiro";
             }
             if(Integer.parseInt(mes)==3){
-                return "Março";
+                return "março";
             }
             if(Integer.parseInt(mes)==4){
-                return "Abril";
+                return "abril";
             }
             if(Integer.parseInt(mes)==5){
-                return "Maio";
+                return "maio";
             }
             if(Integer.parseInt(mes)==6){
-                return "Junho";
+                return "junho";
             }
             if(Integer.parseInt(mes)==7){
-                return "Julho";
+                return "julho";
             }
             if(Integer.parseInt(mes)==8){
-                return "Agosto";
+                return "agosto";
             }
             if(Integer.parseInt(mes)==9){
-                return "Setembro";
+                return "setembro";
             }
             if(Integer.parseInt(mes)==10){
-                return "Outubro";
+                return "outubro";
             }
             if(Integer.parseInt(mes)==11){
-                return "Novembro";
+                return "novembro";
             }
             if(Integer.parseInt(mes)==12){
-                return "Dezembro";
+                return "dezembro";
             }
             return "Invalido";
         }
+
+    
            
         
         

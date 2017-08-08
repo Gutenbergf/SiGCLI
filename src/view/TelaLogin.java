@@ -5,7 +5,12 @@
  */
 package view;
 
+import control.DAO.DAOUsuario;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Usuario;
 
 /**
  *
@@ -19,6 +24,8 @@ public class TelaLogin extends javax.swing.JFrame {
     public TelaLogin() {
         initComponents();
         setSize(610, 480);
+        this.setLocationRelativeTo(null);
+        getRootPane().setDefaultButton(jButton1);
     }
 
     /**
@@ -61,15 +68,25 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        if(txtLogin.getText().equals("Gutenberg") && txtSenha.getText().equals("1234")){
-            JOptionPane.showMessageDialog(null, "Logado com sucesso!");
-            TelaMenu tm = new TelaMenu();
-            tm.setVisible(true);
-            setVisible(false);
+        try {
+            // TODO add your handling code here:
+            //Armazenando login e senha para verificacao
+            Usuario usuario = new Usuario(txtLogin.getText(),txtSenha.getText());
+            DAOUsuario dUsuario = new DAOUsuario();
             
-        }else{
-            JOptionPane.showMessageDialog(null, "Login ivalido!");
+            if(dUsuario.getDados(usuario)){
+                JOptionPane.showMessageDialog(null, "Logado com sucesso!");
+                TelaMenu tm = new TelaMenu();
+                tm.setVisible(true);
+                setVisible(false);
+            }else{
+                JOptionPane.showMessageDialog(null, "Login ivalido!");                
+            }           
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -77,7 +94,7 @@ public class TelaLogin extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws ClassNotFoundException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -100,7 +117,8 @@ public class TelaLogin extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

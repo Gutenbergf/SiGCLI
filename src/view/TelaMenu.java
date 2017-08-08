@@ -19,7 +19,8 @@ public class TelaMenu extends javax.swing.JFrame {
     public TelaMenu() {
         initComponents();
         setSize(530, 480);
-        jButton1.setEnabled(false);
+        this.setLocationRelativeTo(null);
+        //jButton1.setEnabled(false);
     }
 
     /**
@@ -75,6 +76,9 @@ public class TelaMenu extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        TelaCadastroUsuario tcu = new TelaCadastroUsuario();
+        tcu.setVisible(true);
+        setVisible(false);
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

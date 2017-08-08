@@ -6,6 +6,10 @@
 package view;
 
 import control.SiGCLI;
+import control.Cmd;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Contrato;
 import model.Endereco;
@@ -24,6 +28,7 @@ public class TelaGeraContrato extends javax.swing.JFrame {
     public TelaGeraContrato() {
         initComponents();
         setSize(777,705);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -57,11 +62,17 @@ public class TelaGeraContrato extends javax.swing.JFrame {
         txtNomeLocador = new javax.swing.JTextField();
         txtProfissaoLocador = new javax.swing.JTextField();
         txtStCivilLocador = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SiGCLI | Gera Contrato");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(null);
 
         jButton1.setText("Gerar");
@@ -71,7 +82,7 @@ public class TelaGeraContrato extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(633, 633, 110, 30);
+        jButton1.setBounds(640, 630, 110, 30);
         getContentPane().add(txtStCivilLocatario);
         txtStCivilLocatario.setBounds(140, 400, 120, 30);
         getContentPane().add(txtProfissaoLocatario);
@@ -101,13 +112,13 @@ public class TelaGeraContrato extends javax.swing.JFrame {
         getContentPane().add(txtBairro);
         txtBairro.setBounds(130, 550, 120, 30);
         getContentPane().add(txtCidade);
-        txtCidade.setBounds(130, 590, 120, 20);
+        txtCidade.setBounds(130, 590, 120, 30);
         getContentPane().add(txtEstado);
         txtEstado.setBounds(430, 550, 40, 30);
         getContentPane().add(intNum);
         intNum.setBounds(430, 510, 40, 30);
         getContentPane().add(doubleValor);
-        doubleValor.setBounds(650, 590, 90, 20);
+        doubleValor.setBounds(650, 590, 90, 30);
 
         try {
             txtDtInicio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -131,7 +142,7 @@ public class TelaGeraContrato extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         getContentPane().add(txtCep);
-        txtCep.setBounds(430, 590, 110, 20);
+        txtCep.setBounds(430, 590, 110, 30);
 
         try {
             txtCpfLocador.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -151,6 +162,15 @@ public class TelaGeraContrato extends javax.swing.JFrame {
         getContentPane().add(txtStCivilLocador);
         txtStCivilLocador.setBounds(140, 230, 110, 30);
 
+        jButton3.setText("<--");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton3);
+        jButton3.setBounds(90, 640, 50, 20);
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Fundo_TelaFormulario.jpg"))); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(-260, -180, 1050, 850);
@@ -169,28 +189,102 @@ public class TelaGeraContrato extends javax.swing.JFrame {
             txtRgLocador.getText(),txtCpfLocador.getText());
 
         // CRIAR LOCATARIO
-        Locatario locatario = new Locatario(txtNomeLocatario.getText(),txtNacionalidadeLocatario.getText(),txtStCivilLocatario.getText(),txtProfissaoLocatario.getText(),
-            txtRgLocatario.getText(),txtCpfLocatario.getText());
+        
 
         // CRIAR CONTRATO
-        Endereco endereco = new Endereco(txtRua.getText(),txtCidade.getText(),txtBairro.getText(),
+        try{
+            Locatario locatario = new Locatario(txtNomeLocatario.getText(),txtNacionalidadeLocatario.getText(),txtStCivilLocatario.getText(),txtProfissaoLocatario.getText(),
+            txtRgLocatario.getText(),txtCpfLocatario.getText());
+            
+            Endereco endereco = new Endereco(txtRua.getText(),txtCidade.getText(),txtBairro.getText(),
             txtEstado.getText(),txtCep.getText(),Integer.parseInt(intNum.getText()));
 
-        Contrato contrato = new Contrato(endereco,txtDtInicio.getText(),
+            Contrato contrato = new Contrato(endereco,txtDtInicio.getText(),
             txtDtFim.getText(),Double.parseDouble(doubleValor.getText()));
-        // PROCESSA DOCUMENTO
-        if(txtNomeLocador.getText().trim().equals("") || txtEstado.getText().length()>2 || intNum.getText().equals("")){ // CHECAR ERROS
-            JOptionPane.showMessageDialog(null, "Apenas a sigla do Estado");
-        }else{
-            if(JOptionPane.showConfirmDialog(rootPane, "Confirma os dados?")==0){
+            
+             // PROCESSA DOCUMENTO        
+            if(checaCampos()==false){
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+            }else{
+                if(JOptionPane.showConfirmDialog(rootPane, "Confirma os dados?")==0){
                 SiGCLI.processaDocumento(locador, locatario,contrato);
-                JOptionPane.showMessageDialog(null, "Contrato criado em: #aqui fica o destino# | Deseja gerar um novo contrato? ");
+                JOptionPane.showMessageDialog(null, "Contrato criado em: C:\\Users\\"+System.getProperty("user.name")+"\\Desktop\\Contratos");
+                try {
+                    Cmd.abrirDocumentoWord(locatario.getNomeLocatario());
+                } catch (IOException ex) {
+                    Logger.getLogger(TelaGeraContrato.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             }
+            }
+            
 
+        
+            
+        }catch(NumberFormatException nfe){
+            JOptionPane.showMessageDialog(null, "Informe um numero valido!");
         }
+        
+       
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private boolean checaCampos(){
+        TelaGeraContrato teste = new TelaGeraContrato();
+        if(teste.checaLocatario() || teste.checaLocador() || teste.checaContrato()){
+            return false; // Tem campo vazio
+        }
+        return true; // Nao tem campo vazio
+        
+    }
+    
+    private boolean checaLocatario(){
+        if(txtNomeLocatario.getText().trim().isEmpty() || txtRgLocatario.getText().trim().isEmpty() ||
+                txtCpfLocatario.getText().trim().isEmpty() || txtNacionalidadeLocatario.getText().trim().isEmpty()
+                    || txtProfissaoLocatario.getText().trim().isEmpty()){
+            return true; // Tem campo vazio     
+        }
+        return false; // Nao tem campo vazio
+    }
+    
+    private boolean checaLocador(){
+        if(txtNomeLocador.getText().trim().isEmpty() || txtRgLocador.getText().trim().isEmpty() ||
+                txtCpfLocador.getText().trim().isEmpty() || txtNacionalidadeLocador.getText().trim().isEmpty()
+                    || txtProfissaoLocador.getText().trim().isEmpty()){
+            return true;            
+        }
+        return false;
+    }
+    
+    private boolean checaContrato(){
+        if(txtRua.getText().trim().isEmpty() || txtBairro.getText().trim().isEmpty() ||
+                txtEstado.getText().trim().isEmpty()){
+            return true;
+        }
+        return false;
+    }
+    
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(JOptionPane.showConfirmDialog(null, "Se voltar perderá os dados já informado! Deseja voltar ?")==0){
+            TelaMenu tm = new TelaMenu();
+            tm.setVisible(true);
+            setVisible(false);
+        }
+                
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        if(JOptionPane.showConfirmDialog(null, "Se sair agora irá perder os dados já informados. Deseja sair?")!=0){
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        }else{
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+   
     /**
      * @param args the command line arguments
      */
@@ -230,6 +324,7 @@ public class TelaGeraContrato extends javax.swing.JFrame {
     private javax.swing.JTextField doubleValor;
     private javax.swing.JTextField intNum;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JFormattedTextField txtCep;
